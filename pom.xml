@@ -26,6 +26,7 @@
     <modules>
         <module>board-service</module>
         <module>media-service</module>
+        <module>search-service</module>
     </modules>
 
 </project>
