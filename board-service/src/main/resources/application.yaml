@@ -1,3 +1,21 @@
 spring:
   application:
     name: board-service
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${BOARD_DB_NAME}
+    username: ${BOARD_DB_USER}
+    password: ${BOARD_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: false
+    database-platform:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml

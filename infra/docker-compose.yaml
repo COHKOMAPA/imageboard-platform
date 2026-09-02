@@ -1,0 +1,27 @@
+name: imageboard
+services:
+  postgres:
+    image: postgres:18
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD:?POSTGRES_DB_PASSWORD is required}
+      POSTGRES_DB: postgres
+
+      BOARD_DB_USER: ${BOARD_DB_USER:?BOARD_DB_USER is required}
+      BOARD_DB_PASSWORD: ${BOARD_DB_PASSWORD:?BOARD_DB_PASSWORD is required}
+      BOARD_DB_NAME: ${BOARD_DB_NAME:?BOARD_DB_NAME is required}
+
+      MEDIA_DB_USER: ${MEDIA_DB_USER:?MEDIA_DB_USER is required}
+      MEDIA_DB_PASSWORD: ${MEDIA_DB_PASSWORD:?MEDIA_DB_PASSWORD is required}
+      MEDIA_DB_NAME: ${MEDIA_DB_NAME:?MEDIA_DB_PASSWORD is required}
+
+    ports:
+      - "${DB_PORT}:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro # ro = read only
+
+volumes:
+  postgres_data:
