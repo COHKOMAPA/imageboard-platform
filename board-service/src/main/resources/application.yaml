@@ -19,3 +19,25 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+management:
+  otlp:
+    metrics:
+      export:
+        enabled: false
+  tracing:
+    export:
+      otlp:
+        enabled: false
+    sampling:
+      probability: 1
+
+logging:
+  pattern:
+    correlation: "[traceId=%X{traceId:-}, spanId=%X{spanId:-}] "
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
