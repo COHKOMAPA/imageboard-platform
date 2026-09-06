@@ -14,7 +14,7 @@ services:
 
       MEDIA_DB_USER: ${MEDIA_DB_USER:?MEDIA_DB_USER is required}
       MEDIA_DB_PASSWORD: ${MEDIA_DB_PASSWORD:?MEDIA_DB_PASSWORD is required}
-      MEDIA_DB_NAME: ${MEDIA_DB_NAME:?MEDIA_DB_PASSWORD is required}
+      MEDIA_DB_NAME: ${MEDIA_DB_NAME:?MEDIA_DB_NAME is required}
 
     ports:
       - "${DB_PORT}:5432"
