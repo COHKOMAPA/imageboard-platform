@@ -35,7 +35,7 @@ public class Media {
     private long size;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "staus", nullable = false)
+    @Column(name = "status", nullable = false)
     private MediaStatus status;
 
     @CreationTimestamp

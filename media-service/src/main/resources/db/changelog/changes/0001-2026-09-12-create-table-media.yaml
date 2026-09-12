@@ -32,7 +32,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: staus
+                  name: status
                   type: varchar(32)
                   constraints:
                     nullable: false
