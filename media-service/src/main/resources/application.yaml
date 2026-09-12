@@ -33,6 +33,9 @@ minio:
 
 media:
   max-file-size: ${MEDIA_MAX_FILE_SIZE:20MB}
+  cleanup:
+    fixed-delay: 5m
+    pending-ttl: 30m
 
 springdoc:
   api-docs:

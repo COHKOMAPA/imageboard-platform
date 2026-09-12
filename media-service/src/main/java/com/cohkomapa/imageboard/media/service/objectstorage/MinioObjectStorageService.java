@@ -3,11 +3,16 @@ package com.cohkomapa.imageboard.media.service.objectstorage;
 import com.cohkomapa.imageboard.media.config.minio.MinioProperties;
 import com.cohkomapa.imageboard.media.exception.ObjectStorageException;
 import io.minio.*;
+import io.minio.messages.DeleteRequest;
+import io.minio.messages.DeleteResult;
+import io.minio.messages.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -66,6 +71,42 @@ public class MinioObjectStorageService implements ObjectStorageService {
         } catch (Exception ex) {
             throw new ObjectStorageException(
                     "Failed to delete object " + objectKey, ex);
+        }
+    }
+
+    @Override
+    public void deleteByPrefix(String prefix) {
+        try {
+            Iterable<Result<Item>> objects = minioClient.listObjects(
+                    ListObjectsArgs.builder()
+                            .bucket(minioProperties.bucketName())
+                            .prefix(prefix)
+                            .recursive(true)
+                            .build()
+            );
+            List<DeleteRequest.Object> objectsToDelete = new ArrayList<>();
+
+            for (Result<Item> result : objects) {
+                Item item = result.get();
+                objectsToDelete.add(new DeleteRequest.Object(item.objectName()));
+            }
+            if (objectsToDelete.isEmpty()) {
+                return;
+            }
+            Iterable<Result<DeleteResult.Error>> deleteResults = minioClient.removeObjects(
+                    RemoveObjectsArgs.builder()
+                            .bucket(minioProperties.bucketName())
+                            .objects(objectsToDelete)
+                            .build()
+            );
+            for (Result<DeleteResult.Error> result : deleteResults) {
+                DeleteResult.Error error = result.get();
+                throw new ObjectStorageException("Failed to delete object " + error.objectName() + ": " + error.message());
+            }
+        } catch (ObjectStorageException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new ObjectStorageException("Failed to delete objects by prefix " + prefix, ex);
         }
     }
 }

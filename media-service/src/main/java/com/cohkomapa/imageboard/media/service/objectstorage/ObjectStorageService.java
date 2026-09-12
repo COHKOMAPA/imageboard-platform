@@ -15,4 +15,6 @@ public interface ObjectStorageService {
     String generatePresignedUrl(String objectKey, Duration duration);
 
     void delete(String objectKey);
+
+    void deleteByPrefix(String prefix);
 }

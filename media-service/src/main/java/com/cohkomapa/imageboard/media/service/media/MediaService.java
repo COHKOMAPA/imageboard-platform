@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.UUID;
 
 @Service
@@ -59,7 +60,7 @@ public class MediaService {
             return self.markReady(mediaId);
 
         } catch (IOException ex) {
-            throw new MediaProcessingException("Failed to read uploaded file" , ex);
+            throw new MediaProcessingException("Failed to read uploaded file", ex);
         }
     }
 
@@ -85,6 +86,11 @@ public class MediaService {
         Media media = getEntityById(mediaId);
         media.setStatus(MediaStatus.READY);
         return mediaMapper.mapToDetailsDto(media);
+    }
+
+    @Transactional
+    public void deleteAllByIds(Collection<UUID> mediaIds) {
+        mediaRepository.deleteAllByIdInBatch(mediaIds);
     }
 
     private Media getEntityById(UUID mediaId) {
