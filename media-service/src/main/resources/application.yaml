@@ -19,3 +19,23 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+  servlet:
+    multipart:
+      max-file-size: ${media.max-file-size}            # Максимальный размер одного загруженного файла
+      max-request-size: ${MEDIA_MAX_REQUEST_SIZE:21MB} # Максимальный размер всего multipart-запроса
+
+
+minio:
+  endpoint: http://${MINIO_API_HOST}:${MINIO_API_PORT}
+  access-key: ${MINIO_MEDIA_ACCESS_KEY}
+  secret-key: ${MINIO_MEDIA_SECRET_KEY}
+  bucket-name: ${MINIO_BUCKET_NAME}
+
+media:
+  max-file-size: ${MEDIA_MAX_FILE_SIZE:20MB}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
