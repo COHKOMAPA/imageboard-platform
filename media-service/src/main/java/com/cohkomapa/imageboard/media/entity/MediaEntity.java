@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Media {
+public class MediaEntity {
 
     @Id
     @Column(name = "id")

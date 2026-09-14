@@ -24,7 +24,6 @@ spring:
       max-file-size: ${media.max-file-size}            # Максимальный размер одного загруженного файла
       max-request-size: ${MEDIA_MAX_REQUEST_SIZE:21MB} # Максимальный размер всего multipart-запроса
 
-
 minio:
   endpoint: http://${MINIO_API_HOST}:${MINIO_API_PORT}
   access-key: ${MINIO_MEDIA_ACCESS_KEY}
@@ -36,6 +35,8 @@ media:
   cleanup:
     fixed-delay: 5m
     pending-ttl: 30m
+  deleting:
+    fixed-delay: 5m
 
 springdoc:
   api-docs:

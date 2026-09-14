@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
@@ -57,9 +56,9 @@ public class MediaCleanupService {
         }
     }
 
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(readOnly = true)
     public List<UUID> getMediaToDeleteIds(ZonedDateTime pendingCreatedBefore) {
-        Pageable cleanupBtach = PageRequest.of(0, CLEANUP_BATCH_SIZE); // Всегда получаем первые 100 элементов выборки
+        Pageable cleanupBtach = PageRequest.of(0, CLEANUP_BATCH_SIZE); // Всегда получаем первые N элементов выборки
         return mediaRepository.findIdsByStatusAndCreatedBefore(
                 MediaStatus.PENDING,
                 pendingCreatedBefore,

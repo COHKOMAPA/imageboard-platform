@@ -1,7 +1,7 @@
 package com.cohkomapa.imageboard.media.service.media;
 
 import com.cohkomapa.imageboard.media.dto.MediaDetailsDto;
-import com.cohkomapa.imageboard.media.entity.Media;
+import com.cohkomapa.imageboard.media.entity.MediaEntity;
 import com.cohkomapa.imageboard.media.enums.MediaStatus;
 import com.cohkomapa.imageboard.media.enums.SupportedMediaType;
 import com.cohkomapa.imageboard.media.exception.MediaProcessingException;
@@ -12,7 +12,6 @@ import com.cohkomapa.imageboard.media.service.objectstorage.ObjectStorageService
 import com.cohkomapa.imageboard.media.service.validation.MediaFileValidator;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.UUID;
+
+import static com.cohkomapa.imageboard.media.enums.MediaStatus.MARKED_TO_DELETE;
 
 @Service
 public class MediaService {
@@ -64,14 +65,14 @@ public class MediaService {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void createPending(
             UUID mediaId,
             String objectKey,
             MultipartFile file,
             SupportedMediaType mediaType
     ) {
-        Media media = new Media();
+        MediaEntity media = new MediaEntity();
         media.setId(mediaId);
         media.setObjectKey(objectKey);
         media.setOriginalFileName(file.getOriginalFilename());
@@ -81,11 +82,17 @@ public class MediaService {
         mediaRepository.save(media);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public MediaDetailsDto markReady(UUID mediaId) {
-        Media media = getEntityById(mediaId);
+        MediaEntity media = getEntityById(mediaId);
         media.setStatus(MediaStatus.READY);
         return mediaMapper.mapToDetailsDto(media);
+    }
+
+    @Transactional
+    public void markToDelete(UUID mediaId) {
+        MediaEntity media = self.getEntityById(mediaId);
+        media.setStatus(MARKED_TO_DELETE);
     }
 
     @Transactional
@@ -93,7 +100,8 @@ public class MediaService {
         mediaRepository.deleteAllByIdInBatch(mediaIds);
     }
 
-    private Media getEntityById(UUID mediaId) {
+    @Transactional(readOnly = true)
+    public MediaEntity getEntityById(UUID mediaId) {
         return mediaRepository.findById(mediaId)
                 .orElseThrow(() -> new ResourceNotFoundException("Media", mediaId));
     }
