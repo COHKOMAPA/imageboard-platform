@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface MediaMapper {
 
-    MediaDetailsDto mapToDetailsDto(MediaEntity post);
+    MediaDetailsDto mapToDetailsDto(MediaEntity media);
 }
