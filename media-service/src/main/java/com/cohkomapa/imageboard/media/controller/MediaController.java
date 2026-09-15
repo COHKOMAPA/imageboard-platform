@@ -1,6 +1,6 @@
 package com.cohkomapa.imageboard.media.controller;
 
-import com.cohkomapa.imageboard.media.dto.MediaDetailsDto;
+import com.cohkomapa.imageboard.media.dto.response.MediaDetailsDto;
 import com.cohkomapa.imageboard.media.service.media.MediaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.cohkomapa.imageboard.media.dto;
+package com.cohkomapa.imageboard.media.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -7,10 +7,22 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.ZonedDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface MediaRepository extends JpaRepository<MediaEntity, UUID> {
+
+    @Query("""
+            select m.id from MediaEntity m
+            where m.id in :mediaIds
+                and m.status = :status
+            """)
+    Set<UUID> findByIdsAndStatus(
+            Collection<UUID> mediaIds,
+            MediaStatus status
+    );
 
     @Query("""
             select m.id from MediaEntity m

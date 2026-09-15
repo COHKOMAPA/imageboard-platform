@@ -1,6 +1,6 @@
 package com.cohkomapa.imageboard.media.service.media;
 
-import com.cohkomapa.imageboard.media.dto.MediaDetailsDto;
+import com.cohkomapa.imageboard.media.dto.response.MediaDetailsDto;
 import com.cohkomapa.imageboard.media.entity.MediaEntity;
 import com.cohkomapa.imageboard.media.enums.MediaStatus;
 import com.cohkomapa.imageboard.media.enums.SupportedMediaType;
@@ -48,6 +48,12 @@ public class MediaService {
         this.mediaObjectKeyGenerator = mediaObjectKeyGenerator;
         this.mediaRepository = mediaRepository;
         this.mediaMapper = mediaMapper;
+    }
+
+    @Transactional(readOnly = true)
+    public MediaEntity getEntityById(UUID mediaId) {
+        return mediaRepository.findById(mediaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Media", mediaId));
     }
 
     public MediaDetailsDto upload(MultipartFile file) {
@@ -98,11 +104,5 @@ public class MediaService {
     @Transactional
     public void deleteAllByIds(Collection<UUID> mediaIds) {
         mediaRepository.deleteAllByIdInBatch(mediaIds);
-    }
-
-    @Transactional(readOnly = true)
-    public MediaEntity getEntityById(UUID mediaId) {
-        return mediaRepository.findById(mediaId)
-                .orElseThrow(() -> new ResourceNotFoundException("Media", mediaId));
     }
 }

@@ -1,6 +1,6 @@
 package com.cohkomapa.imageboard.media.mapper;
 
-import com.cohkomapa.imageboard.media.dto.MediaDetailsDto;
+import com.cohkomapa.imageboard.media.dto.response.MediaDetailsDto;
 import com.cohkomapa.imageboard.media.entity.MediaEntity;
 import org.mapstruct.Mapper;
 
