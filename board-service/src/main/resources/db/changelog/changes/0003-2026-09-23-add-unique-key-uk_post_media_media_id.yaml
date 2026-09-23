@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Aleksandr Yarkovskiy
+      changes:
+        - addUniqueConstraint:
+            tableName: post_media
+            columnNames: media_id
+            constraintName: uk_post_media_media_id
