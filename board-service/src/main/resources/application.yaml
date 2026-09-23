@@ -1,3 +1,5 @@
+server:
+  port: ${BOARD_SERVICE_PORT:8081}
 spring:
   application:
     name: board-service
@@ -41,3 +43,7 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
+
+clients:
+  media-service:
+    url: http://${MEDIA_SERVICE_HOST:localhost}:${MEDIA_SERVICE_PORT:8082}${MEDIA_SERVICE_API_PREFIX:/api/v1}

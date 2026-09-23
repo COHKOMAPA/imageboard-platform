@@ -27,4 +27,18 @@ public class GlobalExceptionHandler {
 
         return problemDetail;
     }
+
+    @ExceptionHandler(InvalidMediaException.class)
+    public ProblemDetail handle(InvalidMediaException ex) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setTitle("Invalid media");
+        problemDetail.setDetail("Some media cannot be attached to the post");
+        problemDetail.setProperty(
+                "invalidMediaIds",
+                ex.getInvalidMediaIds()
+        );
+
+        return problemDetail;
+    }
 }

@@ -1,7 +1,7 @@
-package com.cohkomapa.imageboard.board.service;
+package com.cohkomapa.imageboard.board.service.post;
 
 import com.cohkomapa.imageboard.board.dto.post.PostFilter;
-import com.cohkomapa.imageboard.board.entity.Post;
+import com.cohkomapa.imageboard.board.entity.post.PostEntity;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,8 +9,8 @@ import org.springframework.data.jpa.domain.Specification;
 @UtilityClass
 public class PostSpecificationBuilder {
 
-    public static Specification<Post> buildWithFilter(PostFilter postFilter) {
-        Specification<Post> spec = Specification.unrestricted();
+    public static Specification<PostEntity> buildWithFilter(PostFilter postFilter) {
+        Specification<PostEntity> spec = Specification.unrestricted();
         if (StringUtils.isNotBlank(postFilter.title())) {
             spec = spec.and((root, query, cb) ->
                     cb.like(

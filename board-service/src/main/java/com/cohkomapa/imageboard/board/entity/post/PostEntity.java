@@ -1,5 +1,6 @@
-package com.cohkomapa.imageboard.board.entity;
+package com.cohkomapa.imageboard.board.entity.post;
 
+import com.cohkomapa.imageboard.board.entity.media.PostMediaEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +18,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Post {
+public class PostEntity {
 
     @Id
     @Column(name = "id")
@@ -27,6 +30,16 @@ public class Post {
 
     @Column(name = "description", length = 500)
     private String description;
+
+    @OneToMany(
+            mappedBy = "post",
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    @OrderBy("position asc")
+    private List<PostMediaEntity> media = new ArrayList<>();
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

@@ -3,15 +3,17 @@ package com.cohkomapa.imageboard.board.mapper;
 import com.cohkomapa.imageboard.board.dto.post.PostCreateDto;
 import com.cohkomapa.imageboard.board.dto.post.PostDetailsDto;
 import com.cohkomapa.imageboard.board.dto.post.PostShortDto;
-import com.cohkomapa.imageboard.board.entity.Post;
+import com.cohkomapa.imageboard.board.entity.post.PostEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PostMapper {
 
-    Post mapToEntity(PostCreateDto createDto);
+    @Mapping(target = "media", ignore = true)
+    PostEntity mapToEntity(PostCreateDto createDto);
 
-    PostShortDto mapToShortDto(Post post);
+    PostShortDto mapToShortDto(PostEntity post);
 
-    PostDetailsDto mapToDetailsDto(Post post);
+    PostDetailsDto mapToDetailsDto(PostEntity post);
 }

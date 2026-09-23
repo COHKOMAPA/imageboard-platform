@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Aleksandr Yarkovskiy
+      changes:
+        - createTable:
+            tableName: post_media
+            columns:
+              - column:
+                  name: post_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: media_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: position
+                  type: int
+                  constraints:
+                    nullable: false
+
+        - addPrimaryKey:
+            tableName: post_media
+            columnNames: post_id, media_id
+            constraintName: pk_post_media
+
+        - addUniqueConstraint:
+            tableName: post_media
+            columnNames: post_id, position
+            constraintName: uk_post_media_post_id_position
+
+        - addForeignKeyConstraint:
+            baseTableName: post_media
+            baseColumnNames: post_id
+            referencedTableName: post
+            referencedColumnNames: id
+            constraintName: fk_post_media_post
+            onDelete: cascade

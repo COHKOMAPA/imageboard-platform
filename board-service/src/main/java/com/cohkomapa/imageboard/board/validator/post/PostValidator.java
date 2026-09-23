@@ -1,4 +1,4 @@
-package com.cohkomapa.imageboard.board.validator;
+package com.cohkomapa.imageboard.board.validator.post;
 
 import com.cohkomapa.imageboard.board.exception.InvalidRequestException;
 import org.springframework.data.domain.Pageable;

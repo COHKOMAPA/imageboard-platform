@@ -1,8 +1,8 @@
 package com.cohkomapa.imageboard.board.controller;
 
 import com.cohkomapa.imageboard.board.dto.post.*;
-import com.cohkomapa.imageboard.board.service.PostService;
-import com.cohkomapa.imageboard.board.validator.PostValidator;
+import com.cohkomapa.imageboard.board.service.post.PostService;
+import com.cohkomapa.imageboard.board.validator.post.PostValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
