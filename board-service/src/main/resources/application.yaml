@@ -1,9 +1,12 @@
 server:
   port: ${BOARD_SERVICE_PORT:8081}
+
+board-service:
+  api-prefix: ${BOARD_SERVICE_API_PREFIX:/api/v1}
+
 spring:
   application:
     name: board-service
-
   datasource:
     url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${BOARD_DB_NAME}
     username: ${BOARD_DB_USER}
