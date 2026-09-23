@@ -1,3 +1,5 @@
+server:
+  port: ${MEDIA_SERVICE_PORT:8082}
 spring:
   application:
     name: media-service
